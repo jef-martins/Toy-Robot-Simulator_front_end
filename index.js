@@ -59,4 +59,4 @@ function main() {
     } while (command.toLowerCase() != 'exit');
 }
 
-main();
+main(); 
