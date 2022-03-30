@@ -33,13 +33,21 @@ function main() {
                 break;
             case 'move':
                 if (c[2] == 'south' || c[2] == 'north') {
-                    table = reset(table);
-                    c[0] = +c[0] + +directions[c[2]];
-                    table[c[0]][c[1]] = 'X';
+                    const verify = +c[0] + +directions[c[2]];
+                    if (!(verify < 0 || verify >= 5)) {
+                        c[0] = +c[0] + +directions[c[2]];
+                        table = reset(table);
+                        table[c[0]][c[1]] = 'X';
+                    } else
+                        console.log("não pode mover alem do limite");
                 } else {
-                    table = reset(table);
-                    c[1] = +c[1] + +directions[c[2]];
-                    table[c[0]][c[1]] = 'X';
+                    const verify = +c[1] + +directions[c[2]];
+                    if (!(verify < 0 || verify >= 5)) {
+                        c[1] = +c[1] + +directions[c[2]];
+                        table = reset(table);
+                        table[c[0]][c[1]] = 'X';
+                    } else
+                        console.log("não pode mover alem do limite");
                 }
                 break;
             case 'left':
