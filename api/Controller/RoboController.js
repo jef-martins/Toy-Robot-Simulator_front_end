@@ -64,6 +64,7 @@ class RoboController {
 
     async init(configs) {
         this.table = this.reset(this.table);
+        this.message = this.command = '';
 
         this.c = Object.values(configs);
 
@@ -73,7 +74,7 @@ class RoboController {
     }
 
     async move({ command }) {
-
+        this.message = '';
         this.command = command;
 
         this.engineRobot();
