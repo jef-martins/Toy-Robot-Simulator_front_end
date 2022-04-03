@@ -9,12 +9,12 @@ robo = new RoboController;
 //-----------Rotas-------------//
 
 //list
-server.get("/", async (req, res) => {
+server.post("/", async (req, res) => {
     const response = await robo.init(req.body);
     res.status(response.status).send(response.data);
 })
 
-server.get("/robot", async (req, res) => {
+server.post("/robot", async (req, res) => {
     const response = await robo.move(req.body);
     res.status(response.status).send(response.data);
 })
