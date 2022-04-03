@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Project Robot toy</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav me-auto mb-2 mb-lg-0">
+            </div>
+            <form class="d-flex">
+                <input [disabled]="init" [(ngModel)]="commands" name="commands" class="form-control me-2" type="search"
+                    placeholder="Commands" aria-label="Search">
+                <button [disabled]="init" class="btn btn-outline-success" type="submit"
+                    (click)="submit()">submit</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <div *ngIf="init" class="alert alert-success" role="alert">
+        <div class="container">
+            <h3 class="text-center">Para iniciar escolha as cordenadas abaixo</h3>
+            <div class="input-group">
+                <span class="input-group-text">Cordenada X</span>
+                <select [(ngModel)]="commandInit.cord_x" class="form-select" aria-label="Default select example">
+                    <option selected value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                </select>
+                <span class="input-group-text">Cordenada Y</span>
+                <select [(ngModel)]="commandInit.cord_y" class="form-select" aria-label="Default select example">
+                    <option selected value="0">1</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                </select>
+                <span class="input-group-text">Direção</span>
+                <select [(ngModel)]="commandInit.direction" class="form-select" aria-label="Default select example">
+                    <option selected value="north">Norte</option>
+                    <option value="south">Sul</option>
+                    <option value="east">Leste</option>
+                    <option value="west">Oeste</option>
+                </select>
+                <button class="btn btn-primary" type="submit"
+                    (click)="submit()">Iniciar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div *ngIf="message.length" class="alert alert-danger" role="alert">
+        {{message}}
+    </div>
+</div>
+
+<div class="center">
+    <div class="border">
+        <div class="row row-cols-auto" *ngFor="let row of grid">
+            <div class="col" *ngFor="let cell of row">
+                <app-icon-true *ngIf="cell === 'X'"></app-icon-true>
+                <app-icon-false *ngIf="cell === 'o'"></app-icon-false>
+            </div>
+        </div>
+    </div>
+</div>
