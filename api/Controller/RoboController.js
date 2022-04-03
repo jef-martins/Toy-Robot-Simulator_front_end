@@ -1,9 +1,10 @@
-//const readlineSync = require('readline-sync');
 
 class RoboController {
 
     table = [[], [], [], [], []];
     command = '';
+    message = '';
+    status = 0;
     c = [];
 
     directions = {
@@ -21,43 +22,43 @@ class RoboController {
     }
 
     engineRobot() {
-        switch (command.toLowerCase()) {
+        switch (this.command.toLowerCase()) {
             case 'report':
-                console.log(table);
+                console.log(this.table);
                 break;
             case 'move':
-                if (c[2] == 'south' || c[2] == 'north') {
-                    const verify = +c[0] + +directions[c[2]];
+                if (this.c[2] == 'south' || this.c[2] == 'north') {
+                    const verify = +this.c[0] + +this.directions[this.c[2]];
                     if (!(verify < 0 || verify >= 5)) {
-                        c[0] = +c[0] + +directions[c[2]];
-                        table = this.reset(table);
-                        table[c[0]][c[1]] = 'X';
+                        this.c[0] = +this.c[0] + +this.directions[this.c[2]];
+                        this.table = this.reset(this.table);
+                        this.table[this.c[0]][this.c[1]] = 'X';
                     } else
-                        console.log("não pode mover alem do limite");
+                        this.message = ("não pode mover alem do limite");
                 } else {
-                    const verify = +c[1] + +directions[c[2]];
+                    const verify = +this.c[1] + +this.directions[this.c[2]];
                     if (!(verify < 0 || verify >= 5)) {
-                        c[1] = +c[1] + +directions[c[2]];
-                        table = this.reset(table);
-                        table[c[0]][c[1]] = 'X';
+                        this.c[1] = +this.c[1] + +this.directions[this.c[2]];
+                        this.table = this.reset(this.table);
+                        this.table[this.c[0]][this.c[1]] = 'X';
                     } else
-                        console.log("não pode mover alem do limite");
+                        this.message = ("não pode mover alem do limite");
                 }
                 break;
             case 'left':
-                c[2] = 'east';
+                this.c[2] = 'east';
                 break;
             case 'right':
-                c[2] = 'west';
+                this.c[2] = 'west';
                 break;
             case 'up':
-                c[2] = 'north';
+                this.c[2] = 'north';
                 break;
             case 'down':
-                c[2] = 'south';
+                this.c[2] = 'south';
                 break;
             default:
-                console.log("comando invalido");
+                this.message = ("comando invalido");
         }
     }
 
@@ -68,13 +69,16 @@ class RoboController {
 
         this.table[this.c[0]][this.c[1]] = 'X';
 
-        return { "status": 200, data: this.table };
+        return { status: 200, data: {table: this.table, message: this.message} };
     }
 
-    async move(command) {
-        this.engineRobot()
+    async move({ command }) {
 
-        return { "status": 200, data: this.table };
+        this.command = command;
+
+        this.engineRobot();
+
+        return { status: 200, data: {table: this.table, message: this.message} };
     }
 
 }
